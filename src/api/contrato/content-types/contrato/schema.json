@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contratos",
+  "info": {
+    "singularName": "contrato",
+    "pluralName": "contratos",
+    "displayName": "Contrato",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dataInicio": {
+      "type": "date",
+      "required": true
+    },
+    "dataFinal": {
+      "type": "date",
+      "required": true
+    },
+    "situacao": {
+      "type": "enumeration",
+      "enum": [
+        "aberto",
+        "perdido"
+      ],
+      "default": "aberto",
+      "required": true
+    },
+    "mensalidade": {
+      "type": "decimal",
+      "required": true
+    },
+    "ltv": {
+      "type": "decimal",
+      "required": false,
+      "default": 0
+    },
+    "cliente": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cliente.cliente",
+      "inversedBy": "contratos"
+    }
+  }
+}

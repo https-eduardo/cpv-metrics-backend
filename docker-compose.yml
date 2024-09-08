@@ -1,0 +1,67 @@
+services:
+  base: &base
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    ports:
+      - 1337:1337
+    volumes:
+      - ./:/home/node
+      - backendnodeslim:/home/node/node_modules
+      - backendcacheslim:/home/node/.cache
+      - backendbuild:/home/node/build
+
+  app:
+    <<: *base
+    environment:
+      NODE_ENV: development
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: cpv-db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: cpv-password@123
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  db:
+    image: library/postgres:14-alpine
+    ports:
+      - 5432:5432
+    environment:
+      PGPORT: 5432
+      POSTGRES_DB: cpv-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: cpv-password@123
+    volumes:
+      - backenddbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin4:
+    hostname: pgadmin4
+    ports:
+      - 6003:80
+    image: dpage/pgadmin4
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'dev@zrp.com.br'
+      PGADMIN_DEFAULT_PASSWORD: 'zrp@1234'
+    depends_on:
+      - db
+
+volumes:
+  backenddbdata:
+  backendnodeslim:
+  backendcacheslim:
+  backendbuild:
+  pgadmindata:

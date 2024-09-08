@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_cliente_enderecos",
+  "info": {
+    "displayName": "Endereco",
+    "icon": "earth"
+  },
+  "options": {},
+  "attributes": {
+    "cidade": {
+      "type": "string",
+      "default": "Londrina",
+      "required": true
+    },
+    "estado": {
+      "type": "string",
+      "required": true,
+      "default": "Paraná"
+    },
+    "regiao": {
+      "type": "enumeration",
+      "enum": [
+        "Sul",
+        "Sudeste",
+        "Centro Oeste",
+        "Nordeste",
+        "Norte"
+      ],
+      "default": "Sul",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clientes",
+  "info": {
+    "singularName": "cliente",
+    "pluralName": "clientes",
+    "displayName": "Cliente",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "bandeira_verde",
+        "bandeira_amarela",
+        "bandeira_vermelha"
+      ],
+      "required": true
+    },
+    "classificacao": {
+      "type": "enumeration",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "required": true
+    },
+    "endereco": {
+      "type": "component",
+      "repeatable": false,
+      "component": "cliente.endereco",
+      "required": true
+    },
+    "contratos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contrato.contrato",
+      "mappedBy": "cliente"
+    }
+  }
+}
