@@ -1,20 +1,10 @@
-import { Attribute } from "@strapi/strapi";
-import { CustomerFromSheet } from "./import-customers-from-sheet";
-
-type ApiCustomerAddress = Omit<Attribute.GetValues<"cliente.endereco">, "id">;
-type ApiCustomer = Omit<
-  Attribute.GetValues<"api::cliente.cliente">,
-  "endereco" | "id"
-> & {
-  endereco: ApiCustomerAddress;
-};
-type ApiContract = Omit<Attribute.GetValues<"api::contrato.contrato">, "id">;
-type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
-
-interface CustomerSheetParseResult {
-  customer: ApiCustomer;
-  contract: ApiContract;
-}
+import {
+  ApiCustomer,
+  ApiCustomerAddress,
+  CustomerFromSheet,
+  CustomerSheetParseResult,
+  PropType,
+} from "../../types";
 
 export class CustomerSheetParser {
   private sheetCustomer: CustomerFromSheet;
@@ -40,8 +30,10 @@ export class CustomerSheetParser {
         mensalidade: this.sheetCustomer.Mensalidade,
         ltv: this.sheetCustomer["Life Time Value"],
         mesesContratuais: this.sheetCustomer["Tempo de contrato em meses"],
-        dataFinal: this.sheetCustomer["Data de término do contrato"],
-        dataInicio: this.sheetCustomer["Início do contrato"],
+        dataFinal: this.formatDate(
+          this.sheetCustomer["Data de término do contrato"]
+        ),
+        dataInicio: this.formatDate(this.sheetCustomer["Início do contrato"]),
       },
     };
   }
@@ -70,6 +62,15 @@ export class CustomerSheetParser {
 
     if (sheetSituation === "Em aberto") return "aberto";
     else return "perdido";
+  }
+
+  private formatDate(date?: Date | string) {
+    if (!date) return date;
+    if (date instanceof Date) return date;
+
+    const { 0: year, 1: month, 2: day } = date.split("/");
+
+    return new Date(Number(year), Number(month), Number(day));
   }
 
   private getCustomerZone() {
