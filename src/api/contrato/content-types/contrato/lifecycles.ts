@@ -2,8 +2,14 @@ import { getContractMonths } from "../../../../utils/getContractMonths";
 import { parseISO } from "date-fns";
 
 function handleLtvCalc(data) {
-  const startDate = parseISO(data.dataInicio);
-  const endDate = parseISO(data.dataFinal);
+  if (!data.startDate || !data.endDate) return data.ltv;
+
+  const startDate =
+    data.dataInicio instanceof Date
+      ? data.dataInicio
+      : parseISO(data.dataInicio);
+  const endDate =
+    data.dataFinal instanceof Date ? data.dataFinal : parseISO(data.dataFinal);
 
   const monthsInContract = getContractMonths(startDate, endDate);
   const calculatedLtv = data.mensalidade * monthsInContract;
@@ -15,13 +21,13 @@ export default {
     const { data } = event.params;
     const calculatedLtv = handleLtvCalc(data);
 
-    data.ltv = calculatedLtv;
+    if (data.ltv === undefined || data.ltv === null) data.ltv = calculatedLtv;
   },
 
   beforeUpdate(event) {
     const { data } = event.params;
     const calculatedLtv = handleLtvCalc(data);
 
-    data.ltv = calculatedLtv;
+    if (data.ltv === undefined || data.ltv === null) data.ltv = calculatedLtv;
   },
 };

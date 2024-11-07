@@ -14,11 +14,11 @@
   "attributes": {
     "dataInicio": {
       "type": "date",
-      "required": true
+      "required": false
     },
     "dataFinal": {
       "type": "date",
-      "required": true
+      "required": false
     },
     "situacao": {
       "type": "enumeration",
@@ -43,6 +43,10 @@
       "relation": "manyToOne",
       "target": "api::cliente.cliente",
       "inversedBy": "contratos"
+    },
+    "mesesContratuais": {
+      "type": "integer",
+      "required": false
     }
   }
 }
