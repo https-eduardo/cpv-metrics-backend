@@ -15,6 +15,6 @@ export default factories.createCoreService("api::cliente.cliente", {
     );
 
     importCustomersFromSheetUseCase.setup();
-    await importCustomersFromSheetUseCase.execute();
+    return await importCustomersFromSheetUseCase.execute();
   },
 });

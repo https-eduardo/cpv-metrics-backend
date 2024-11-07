@@ -21,7 +21,9 @@
       "enum": [
         "bandeira_verde",
         "bandeira_amarela",
-        "bandeira_vermelha"
+        "bandeira_vermelha",
+        "bandeira_branca",
+        "perdido"
       ],
       "required": true
     },

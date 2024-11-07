@@ -5,18 +5,14 @@ export interface ClienteEndereco extends Schema.Component {
   info: {
     displayName: 'Endereco';
     icon: 'earth';
+    description: '';
   };
   attributes: {
-    cidade: Attribute.String &
-      Attribute.Required &
-      Attribute.DefaultTo<'Londrina'>;
-    estado: Attribute.String &
-      Attribute.Required &
-      Attribute.DefaultTo<'Paran\u00E1'>;
+    cidade: Attribute.String & Attribute.DefaultTo<'Londrina'>;
+    estado: Attribute.String & Attribute.DefaultTo<'Paran\u00E1'>;
     regiao: Attribute.Enumeration<
-      ['Sul', 'Sudeste', 'Centro Oeste', 'Nordeste', 'Norte']
+      ['Sul', 'Sudeste', 'Centro Oeste', 'Nordeste', 'Norte', 'Internacional']
     > &
-      Attribute.Required &
       Attribute.DefaultTo<'Sul'>;
   };
 }

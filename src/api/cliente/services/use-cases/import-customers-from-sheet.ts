@@ -1,6 +1,7 @@
 import XLSX from "xlsx";
+import { CustomerSheetParser } from "./customer-sheet-parser";
 
-interface CustomerFromSheet {
+export interface CustomerFromSheet {
   Cliente: string;
   "Tempo de contrato em meses": number;
   "Início do contrato": Date;
@@ -39,6 +40,10 @@ export class ImportCustomersFromSheetUseCase {
   async execute() {
     if (!this.parsedData) throw new Error("Spreadsheet data not parsed.");
 
-    console.log(this.parsedData);
+    for (const customer of this.parsedData) {
+      const customerSheetParser = new CustomerSheetParser(customer);
+
+      console.log(customerSheetParser.parse());
+    }
   }
 }

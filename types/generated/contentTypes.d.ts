@@ -802,7 +802,13 @@ export interface ApiClienteCliente extends Schema.CollectionType {
   attributes: {
     nome: Attribute.String & Attribute.Required;
     status: Attribute.Enumeration<
-      ['bandeira_verde', 'bandeira_amarela', 'bandeira_vermelha']
+      [
+        'bandeira_verde',
+        'bandeira_amarela',
+        'bandeira_vermelha',
+        'bandeira_branca',
+        'perdido'
+      ]
     > &
       Attribute.Required;
     classificacao: Attribute.Enumeration<['A', 'B', 'C', 'S']> &
@@ -842,8 +848,8 @@ export interface ApiContratoContrato extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    dataInicio: Attribute.Date & Attribute.Required;
-    dataFinal: Attribute.Date & Attribute.Required;
+    dataInicio: Attribute.Date;
+    dataFinal: Attribute.Date;
     situacao: Attribute.Enumeration<['aberto', 'perdido']> &
       Attribute.Required &
       Attribute.DefaultTo<'aberto'>;
@@ -854,6 +860,7 @@ export interface ApiContratoContrato extends Schema.CollectionType {
       'manyToOne',
       'api::cliente.cliente'
     >;
+    mesesContratuais: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
