@@ -10,4 +10,11 @@ export default factories.createCoreController("api::cliente.cliente", {
 
     return await strapi.service("api::cliente.cliente").importFromSheet(file);
   },
+  async getGeneralInfo(ctx) {
+    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+
+    return await strapi
+      .service("api::cliente.cliente")
+      .getGeneralInfo(sanitizedQueryParams);
+  },
 });
