@@ -5,6 +5,7 @@
 import { factories } from "@strapi/strapi";
 import { ImportCustomersFromSheetUseCase } from "./use-cases/import-customers-from-sheet";
 import fs from "node:fs/promises";
+import { differenceInMonths } from "date-fns";
 
 export default factories.createCoreService("api::cliente.cliente", {
   async importFromSheet(file: { path: string }) {
@@ -18,6 +19,9 @@ export default factories.createCoreService("api::cliente.cliente", {
     return await importCustomersFromSheetUseCase.execute();
   },
   async getGeneralInfo(query: Record<string, any>) {
+    const filterStartDate = query.filters?.contratos?.dataInicial?.$lte;
+    const filterEndDate = query.filters?.contratos?.dataFinal?.$lte;
+
     const totalCustomers = await strapi.db
       .query("api::cliente.cliente")
       .count();
@@ -46,9 +50,14 @@ export default factories.createCoreService("api::cliente.cliente", {
       0
     );
 
-    const lostCustomers = customers.filter(
-      (customer) => customer.status === "perdido"
-    ).length;
+    const lostCustomers = await strapi.query("api::cliente.cliente").count({
+      where: {
+        ...query.filters,
+        status: {
+          $eq: "perdido",
+        },
+      },
+    });
 
     const churnRate = (lostCustomers / totalCustomers) * 100;
 

@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "relatorio_campanhas",
+  "info": {
+    "singularName": "relatorio-campanha",
+    "pluralName": "relatorio-campanhas",
+    "displayName": "RelatorioCampanha",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dataReferencia": {
+      "type": "date",
+      "required": true
+    },
+    "clicks": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "conversoes": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "column": {
+        "type": "decimal",
+        "args": [
+          16,
+          8
+        ]
+      }
+    },
+    "custo": {
+      "type": "decimal",
+      "required": true,
+      "default": 0
+    },
+    "ctr": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "column": {
+        "type": "decimal",
+        "args": [
+          16,
+          8
+        ]
+      }
+    },
+    "cpc": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "column": {
+        "type": "decimal",
+        "args": [
+          16,
+          8
+        ]
+      }
+    },
+    "impressoes": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "campanha": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::campanha.campanha",
+      "inversedBy": "relatorio_campanhas"
+    }
+  }
+}

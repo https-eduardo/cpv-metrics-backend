@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "campanhas",
+  "info": {
+    "singularName": "campanha",
+    "pluralName": "campanhas",
+    "displayName": "Campanha"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "cliente": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cliente.cliente"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "ativa",
+        "pausada",
+        "deletada"
+      ],
+      "required": true
+    },
+    "relatorio_campanhas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::relatorio-campanha.relatorio-campanha",
+      "mappedBy": "campanha"
+    }
+  }
+}
