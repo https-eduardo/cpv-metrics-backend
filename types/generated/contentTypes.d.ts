@@ -788,6 +788,47 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCampanhaCampanha extends Schema.CollectionType {
+  collectionName: 'campanhas';
+  info: {
+    singularName: 'campanha';
+    pluralName: 'campanhas';
+    displayName: 'Campanha';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    nome: Attribute.String & Attribute.Required & Attribute.Unique;
+    cliente: Attribute.Relation<
+      'api::campanha.campanha',
+      'oneToOne',
+      'api::cliente.cliente'
+    >;
+    status: Attribute.Enumeration<['ativa', 'pausada', 'deletada']> &
+      Attribute.Required;
+    relatorio_campanhas: Attribute.Relation<
+      'api::campanha.campanha',
+      'oneToMany',
+      'api::relatorio-campanha.relatorio-campanha'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::campanha.campanha',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::campanha.campanha',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiClienteCliente extends Schema.CollectionType {
   collectionName: 'clientes';
   info: {
@@ -878,6 +919,48 @@ export interface ApiContratoContrato extends Schema.CollectionType {
   };
 }
 
+export interface ApiRelatorioCampanhaRelatorioCampanha
+  extends Schema.CollectionType {
+  collectionName: 'relatorio_campanhas';
+  info: {
+    singularName: 'relatorio-campanha';
+    pluralName: 'relatorio-campanhas';
+    displayName: 'RelatorioCampanha';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    dataReferencia: Attribute.Date & Attribute.Required;
+    clicks: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    conversoes: Attribute.Decimal & Attribute.Required & Attribute.DefaultTo<0>;
+    custo: Attribute.Decimal & Attribute.Required & Attribute.DefaultTo<0>;
+    ctr: Attribute.Decimal & Attribute.Required & Attribute.DefaultTo<0>;
+    cpc: Attribute.Decimal & Attribute.Required & Attribute.DefaultTo<0>;
+    impressoes: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    campanha: Attribute.Relation<
+      'api::relatorio-campanha.relatorio-campanha',
+      'manyToOne',
+      'api::campanha.campanha'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::relatorio-campanha.relatorio-campanha',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::relatorio-campanha.relatorio-campanha',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -896,8 +979,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::campanha.campanha': ApiCampanhaCampanha;
       'api::cliente.cliente': ApiClienteCliente;
       'api::contrato.contrato': ApiContratoContrato;
+      'api::relatorio-campanha.relatorio-campanha': ApiRelatorioCampanhaRelatorioCampanha;
     }
   }
 }

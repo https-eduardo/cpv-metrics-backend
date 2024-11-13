@@ -10,6 +10,7 @@ export type ApiCustomer = Omit<
 > & {
   endereco: ApiCustomerAddress;
 };
+
 export type ApiContract = Omit<
   Attribute.GetValues<"api::contrato.contrato">,
   "id"
