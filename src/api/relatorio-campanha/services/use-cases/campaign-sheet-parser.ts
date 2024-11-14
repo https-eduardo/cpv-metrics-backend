@@ -15,7 +15,6 @@ export class CampaignSheetParser {
   }
 
   parse(): CampaignSheetParserResult {
-    console.log(this.sheetCampaign.CTR);
     return {
       campaign: {
         nome: this.sheetCampaign.Campaign,
@@ -35,6 +34,7 @@ export class CampaignSheetParser {
         conversoes: this.sheetCampaign.Conversions || 0,
         custo: this.sheetCampaign.Cost || 0,
         dataReferencia: this.sheetCampaign.Day,
+        custoConversao: this.sheetCampaign["Cost / conv."],
       },
     };
   }

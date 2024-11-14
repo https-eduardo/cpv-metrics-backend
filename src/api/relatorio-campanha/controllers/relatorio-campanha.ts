@@ -14,5 +14,17 @@ export default factories.createCoreController(
         .service("api::relatorio-campanha.relatorio-campanha")
         .importFromSheet(file);
     },
+
+    async getGeneralInfo(ctx) {
+      const { filterOnlyActive, start, end } = ctx.request.query;
+
+      return await strapi
+        .service("api::relatorio-campanha.relatorio-campanha")
+        .getCampaignGeneralInfo({
+          filterOnlyActive,
+          start,
+          end,
+        });
+    },
   }
 );

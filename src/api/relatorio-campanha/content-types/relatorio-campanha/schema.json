@@ -72,6 +72,18 @@
       "relation": "manyToOne",
       "target": "api::campanha.campanha",
       "inversedBy": "relatorio_campanhas"
+    },
+    "custoConversao": {
+      "type": "decimal",
+      "default": 0,
+      "required": true,
+      "column": {
+        "type": "decimal",
+        "args": [
+          16,
+          8
+        ]
+      }
     }
   }
 }

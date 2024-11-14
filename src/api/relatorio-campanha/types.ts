@@ -9,6 +9,7 @@ export interface CampaignReportSheet {
   Cost: number;
   Clicks: number;
   "Avg. CPC": number;
+  "Cost / conv.": number;
   CTR: number;
   Conversions: number;
   "Impr.": number;
@@ -32,3 +33,9 @@ export type ApiCampaignReport = Omit<
   Attribute.GetValues<"api::relatorio-campanha.relatorio-campanha">,
   "id"
 >;
+
+export interface GeneralCampaignInfoQueryFilters {
+  filterOnlyActive: boolean;
+  start?: Date;
+  end?: Date;
+}
