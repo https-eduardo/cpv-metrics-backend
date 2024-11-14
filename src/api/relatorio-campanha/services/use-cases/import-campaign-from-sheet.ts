@@ -57,13 +57,12 @@ export class ImportCampaignFromSheetUseCase {
         continue;
       }
       console.log(campaign.nome, campaignReport.dataReferencia);
-      await strapi.db.transaction(async () => {
-        const upsertedCustomer = await this.upsertCampaign(campaign);
-        await this.upsertCampaignReport(
-          Number(upsertedCustomer.id),
-          campaignReport
-        );
-      });
+
+      const upsertedCustomer = await this.upsertCampaign(campaign);
+      await this.upsertCampaignReport(
+        Number(upsertedCustomer.id),
+        campaignReport
+      );
     }
   }
 

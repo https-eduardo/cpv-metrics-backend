@@ -5,6 +5,8 @@
 import { factories } from "@strapi/strapi";
 import fs from "node:fs/promises";
 import { ImportCampaignFromSheetUseCase } from "./use-cases/import-campaign-from-sheet";
+import { QueryCampaignGeneralInfoUseCase } from "./use-cases/query-campaign-general-info";
+import { GeneralCampaignInfoQueryFilters } from "../types";
 
 export default factories.createCoreService(
   "api::relatorio-campanha.relatorio-campanha",
@@ -19,6 +21,19 @@ export default factories.createCoreService(
       importCampaignsFromSheetUseCase.execute();
       return {
         message: "Campaign reports import started.",
+      };
+    },
+    async getCampaignGeneralInfo(filters: GeneralCampaignInfoQueryFilters) {
+      const queryCampaignGeneralInfoUseCase =
+        new QueryCampaignGeneralInfoUseCase(filters);
+
+      const sum = await queryCampaignGeneralInfoUseCase.execute();
+
+      return {
+        clicks: Number(sum[0].clicks),
+        impressions: Number(sum[0].impressions),
+        cost: Number(sum[0].cost),
+        conversions: Number(sum[0].conversions),
       };
     },
   }

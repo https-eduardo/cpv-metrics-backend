@@ -944,6 +944,9 @@ export interface ApiRelatorioCampanhaRelatorioCampanha
       'manyToOne',
       'api::campanha.campanha'
     >;
+    custoConversao: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
