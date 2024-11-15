@@ -22,7 +22,10 @@ export class QueryCampaignGeneralInfoUseCase {
       )
       .leftJoin("campanhas as cam", "cam.id", "camlk.campanha_id")
       .modify((builder) => {
-        if (this.filters.filterOnlyActive)
+        if (
+          this.filters.filterOnlyActive &&
+          this.filters.filterOnlyActive === "true"
+        )
           builder.where("cam.status", "=", "ativa");
         if (this.filters.start) {
           builder.where(

@@ -35,7 +35,7 @@ export type ApiCampaignReport = Omit<
 >;
 
 export interface GeneralCampaignInfoQueryFilters {
-  filterOnlyActive: boolean;
+  filterOnlyActive: string;
   start?: Date;
   end?: Date;
 }
